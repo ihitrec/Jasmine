@@ -1,0 +1,24 @@
+body{
+    background-color: #f4f4f4;
+}
+table{
+    width: 400px;
+    height: 400px;
+    border-collapse: collapse;
+    text-align: center;
+    border: 2px solid black;
+}
+td{
+    border:1px solid black;
+    
+}
+.double-border{
+    border-right: 2px solid black;
+}
+.double-border-bot{
+    border-bottom: 2px solid black;
+}
+td{
+    outline: none;
+    width: 100px;
+}
