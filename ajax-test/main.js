@@ -27,11 +27,22 @@ function pickANumber() { return Math.floor(Math.random() * 9 + 1); }
 let alreadyPickedCell = [];
 let cellArray = document.getElementsByTagName("td");
 function generateTemplate() {
-
     for (i = 0; i < 17; i++) {
         let pickedCell = pickACell();
+        // Get the index of a cell and change it to contain the cell at the top of the row
+        let reduceToSameRow = pickedCell;
+        if (reduceToSameRow > 9) {
+            let fitsHowMany = Math.floor(reduceToSameRow / 9);
+            reduceToSameRow = reduceToSameRow - (9 * fitsHowMany);
+        }
+        // Get all indexes of the cells in the same rows
+        let sameRow = [];
+        for (i = reduceToSameRow; i < 81; i += 9) {
+            sameRow.push(i);
+        }
+
         /* If the cell picked in the current iteration doesn't match any that were previously picked,
-           add a random number to it. Otherwise skip it and reduce the count by one. */
+           add number between 1 and 9 to it. Otherwise skip it and reduce the count by one. */
         if (alreadyPickedCell.includes(pickedCell) === false) {
             cellArray[pickedCell].innerText = pickANumber();
             alreadyPickedCell.push(pickedCell);
@@ -41,15 +52,28 @@ function generateTemplate() {
     }
     alreadyPickedCell = [];
 }
+
+// function sameRow(currentCell) {
+//     let currentRow;
+//     for (i = cellArray.indexOf(pickedCell); i < 82; i += 9) {
+//         console.log(cellArray[i]);
+//     }
+
+// }
+
+// Generate template when the page is refreshed
 generateTemplate();
+
+// Reset the text of each cell
 function resetTemplate() {
     for (i = 0; i < cellArray.length; i++) {
         cellArray[i].innerText = "";
 
     }
 }
+
+// Button which resets the template and generates a new one
 $("button").click(function () {
     resetTemplate();
     generateTemplate();
-    console.log(alreadyPickedCell);
 })
