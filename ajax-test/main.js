@@ -40,6 +40,7 @@ function generateTemplate() {
         for (j = reduceToSameColumn; j < 81; j += 9) {
             sameColumn.push(j);
         }
+        // Remove the picked cell so it does not check its own innerText
         let removeACell = sameColumn.indexOf(pickedCell);
         sameColumn.splice(removeACell, 1);
         /* If the cell picked in the current iteration doesn't match any that were previously picked,
@@ -47,9 +48,13 @@ function generateTemplate() {
         if (alreadyPickedCells.includes(pickedCell) === false) {
             cellArray[pickedCell].innerText = pickANumber();
             alreadyPickedCells.push(pickedCell);
+            // If the current cell matches the text of any in the same column, reset its text and reduce the  generateTemplate count by 1
             for (k = 0; k < sameColumn.length; k++) {
-                if (cellArray[alreadyPickedCells[i]].innerText === cellArray[sameColumn[k]].innerText) {
+                if (cellArray[pickedCell].innerText === cellArray[sameColumn[k]].innerText) {
                     cellArray[pickedCell].innerText = "";
+                    i--;
+                } else if (cellArray[pickedCell].innerText === cellArray[sameRow[k]].innerText) {
+
                 }
             }
         } else if (alreadyPickedCells.includes(pickedCell) === true) {
@@ -58,14 +63,6 @@ function generateTemplate() {
     }
     alreadyPickedCells = [];
 }
-
-// function sameRow(currentCell) {
-//     let currentRow;
-//     for (i = cellArray.indexOf(pickedCell); i < 82; i += 9) {
-//         console.log(cellArray[i]);
-//     }
-
-// }
 
 // Generate template when the page is refreshed
 generateTemplate();
