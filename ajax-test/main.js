@@ -24,7 +24,7 @@ function pickACell() { return Math.floor(Math.random() * 81); }
 function pickANumber() { return Math.floor(Math.random() * 9 + 1); }
 
 // Generate a random template of 17 filled cells at the start
-let alreadyPickedCell = [];
+let alreadyPickedCells = [];
 let cellArray = document.getElementsByTagName("td");
 function generateTemplate() {
     for (i = 0; i < 17; i++) {
@@ -37,20 +37,29 @@ function generateTemplate() {
         }
         // Get all indexes of the cells in the same rows
         let sameRow = [];
-        for (i = reduceToSameRow; i < 81; i += 9) {
-            sameRow.push(i);
+        for (j = reduceToSameRow; j < 81; j += 9) {
+            sameRow.push(j);
         }
-
+        // console.log(sameRow);
         /* If the cell picked in the current iteration doesn't match any that were previously picked,
            add number between 1 and 9 to it. Otherwise skip it and reduce the count by one. */
-        if (alreadyPickedCell.includes(pickedCell) === false) {
+        if (alreadyPickedCells.includes(pickedCell) === false) {
             cellArray[pickedCell].innerText = pickANumber();
-            alreadyPickedCell.push(pickedCell);
-        } else if (alreadyPickedCell.includes(pickedCell) === true) {
+            alreadyPickedCells.push(pickedCell);
+            // console.log(alreadyPickedCells);
+            for (k = 0; k < alreadyPickedCells.length; k++) {
+                for (l = 0; l < sameRow.length; l++) {
+                    if (cellArray[alreadyPickedCells[k]].innerText === sameRow[l].innerText) {
+                        console.log("A");
+                    }
+                }
+            }
+
+        } else if (alreadyPickedCells.includes(pickedCell) === true) {
             i--;
         }
     }
-    alreadyPickedCell = [];
+    alreadyPickedCells = [];
 }
 
 // function sameRow(currentCell) {
