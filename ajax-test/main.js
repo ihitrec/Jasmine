@@ -40,19 +40,20 @@ function generateTemplate() {
         for (j = reduceToSameRow; j < 81; j += 9) {
             sameRow.push(j);
         }
-        // console.log(sameRow);
         /* If the cell picked in the current iteration doesn't match any that were previously picked,
            add number between 1 and 9 to it. Otherwise skip it and reduce the count by one. */
         if (alreadyPickedCells.includes(pickedCell) === false) {
             cellArray[pickedCell].innerText = pickANumber();
             alreadyPickedCells.push(pickedCell);
-            // console.log(alreadyPickedCells);
-            for (k = 0; k < alreadyPickedCells.length; k++) {
-                for (l = 0; l < sameRow.length; l++) {
-                    if (cellArray[alreadyPickedCells[k]].innerText === sameRow[l].innerText) {
-                        console.log("A");
-                    }
+            let isIt;
+            for (k = 0; k < sameRow.length; k++) {
+                if (cellArray[alreadyPickedCells[i]].innerText === cellArray[sameRow[k]].innerText) {
+                    isIt = true;
+                    return isIt;
                 }
+            }
+            if (isIt === true) {
+                cellArray[pickedCell].innerText = "";
             }
 
         } else if (alreadyPickedCells.includes(pickedCell) === true) {
