@@ -1,0 +1,2 @@
+# Bugs
+The new game button could only be used four times before the website stopped working. That was because the cells that were already picked stayed on the list and on the fifth click made the generateTemplate count reduce, making the loop infinite. It was fixed by resetting it at the end of the function.

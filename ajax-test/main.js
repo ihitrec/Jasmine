@@ -39,14 +39,17 @@ function generateTemplate() {
             i--;
         }
     }
+    alreadyPickedCell = [];
 }
 generateTemplate();
 function resetTemplate() {
     for (i = 0; i < cellArray.length; i++) {
         cellArray[i].innerText = "";
+
     }
 }
 $("button").click(function () {
     resetTemplate();
     generateTemplate();
+    console.log(alreadyPickedCell);
 })
