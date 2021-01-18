@@ -17,7 +17,7 @@ function myFunc() {
 
 }
 
-// Generate a random cell using the cellArray variable 
+// Generate a random cell index
 function pickACell() { return Math.floor(Math.random() * 81); }
 
 // Generate a random number from 1 to 9
@@ -29,33 +29,29 @@ let cellArray = document.getElementsByTagName("td");
 function generateTemplate() {
     for (i = 0; i < 17; i++) {
         let pickedCell = pickACell();
-        // Get the index of a cell and change it to contain the cell at the top of the row
-        let reduceToSameRow = pickedCell;
-        if (reduceToSameRow > 9) {
-            let fitsHowMany = Math.floor(reduceToSameRow / 9);
-            reduceToSameRow = reduceToSameRow - (9 * fitsHowMany);
+        // Get the index of the picked cell and reduce it to the first at the top of the column
+        let reduceToSameColumn = pickedCell;
+        if (reduceToSameColumn > 9) {
+            let fitsHowMany = Math.floor(reduceToSameColumn / 9);
+            reduceToSameColumn = reduceToSameColumn - (9 * fitsHowMany);
         }
-        // Get all indexes of the cells in the same rows
-        let sameRow = [];
-        for (j = reduceToSameRow; j < 81; j += 9) {
-            sameRow.push(j);
+        // Get all indexes of the cells in the same column
+        let sameColumn = [];
+        for (j = reduceToSameColumn; j < 81; j += 9) {
+            sameColumn.push(j);
         }
+        let removeACell = sameColumn.indexOf(pickedCell);
+        sameColumn.splice(removeACell, 1);
         /* If the cell picked in the current iteration doesn't match any that were previously picked,
            add number between 1 and 9 to it. Otherwise skip it and reduce the count by one. */
         if (alreadyPickedCells.includes(pickedCell) === false) {
             cellArray[pickedCell].innerText = pickANumber();
             alreadyPickedCells.push(pickedCell);
-            let isIt;
-            for (k = 0; k < sameRow.length; k++) {
-                if (cellArray[alreadyPickedCells[i]].innerText === cellArray[sameRow[k]].innerText) {
-                    isIt = true;
-                    return isIt;
+            for (k = 0; k < sameColumn.length; k++) {
+                if (cellArray[alreadyPickedCells[i]].innerText === cellArray[sameColumn[k]].innerText) {
+                    cellArray[pickedCell].innerText = "";
                 }
             }
-            if (isIt === true) {
-                cellArray[pickedCell].innerText = "";
-            }
-
         } else if (alreadyPickedCells.includes(pickedCell) === true) {
             i--;
         }
