@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&family=Yusei+Magic&display=swap');
+
+body{
+    background-color: ghostwhite;
+}
+
+/* START ------------------------------------------------------------ Table style */
+
+table{
+    margin: 20px auto;
+    width: 450px;
+    height: 450px;
+    border-collapse: collapse;
+    text-align: center;
+    border: 1.5px solid gray;
+    font-family: "Quicksand", sans-serif;
+    font-size: 27px;
+    background-color: aliceblue;
+}
+.double-border{
+    border-right: 1.5px solid gray;
+}
+.double-border-bot{
+    border-bottom: 1.5px solid gray;
+}
+td{
+    border:1px solid gainsboro;
+    outline: none;
+    width: 100px;
+    color: transparent;
+    text-shadow: 0 0 black;
+}
+td:focus{
+    background-color: #c9e0f5;
+}
+
+ /* Correct and wrong colors for later */
+.wrong{
+    background-color:#e01717;
+    opacity: .76;
+}
+.correct{
+    background-color:forestgreen;
+    opacity: .85;
+}
+
+/* Table style -------------------------------------------------------------- END */
+
+/* START ------------------------------------------------------------ Numpad style */
+
+#numpad{
+    font-size: 45px;
+    font-family: 'Quicksand';
+    text-align: center;
+    font-weight: 100;
+}
+.num{
+    margin:5px;
+}
+
+/* Numpad style -------------------------------------------------------------- END */
+
+
+
+
