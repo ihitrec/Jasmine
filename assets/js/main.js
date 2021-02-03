@@ -130,7 +130,7 @@ $(document).ready(function () {
                 lastPressed[0].focus();
             }, 600);
         }
-
+        savedLP.attr("contenteditable", "false");
         // If selected cell input matches any of the ones in the same column or row, call itsWrong().
         // Otherwise mark it as correct.
         for (i = 0; i < 8; i++) {
@@ -142,11 +142,9 @@ $(document).ready(function () {
             }
             if (targetCol(i).text() === savedLP.text()) {
                 itsWrong(targetCol, i);
-                disableMobile();
                 break;
             } else if (targetRow(i).text() === savedLP.text()) {
                 itsWrong(targetRow, i);
-                disableMobile();
                 break;
             } else if (savedLP.text() !== actualValue) {
                 savedLP.addClass("wrong");
@@ -156,7 +154,6 @@ $(document).ready(function () {
                     savedLP.attr("contenteditable", "true");
                     lastPressed[0].focus();
                 }, 600);
-                disableMobile();
             } else if (i === 7) {
                 savedLP.attr("contenteditable", "false");
                 savedLP.addClass("correct");
@@ -165,5 +162,6 @@ $(document).ready(function () {
                 }, 600);
             }
         }
+        savedLP.attr("contenteditable", "true");
     };
 });
