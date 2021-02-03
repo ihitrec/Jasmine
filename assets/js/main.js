@@ -162,6 +162,6 @@ $(document).ready(function () {
                 }, 600);
             }
         }
-        savedLP.attr("contenteditable", "true");
+        savedLP.attr("contenteditable", "false");
     };
 });
