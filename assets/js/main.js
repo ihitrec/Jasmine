@@ -45,7 +45,6 @@ $(document).ready(function () {
     }
 
     // Add a click function on each cell. Push the last selected cell into an array.
-    // Call disableMobile().
     $("td").click(selectedCell);
     let lastPressed = [];
     function selectedCell() {
@@ -131,8 +130,8 @@ $(document).ready(function () {
                 lastPressed[0].focus();
             }, 600);
         }
-        savedLP.attr("contenteditable", "false");
-        // If selected cell input matches any of the ones in the same column or row, call itsWrong().
+
+        // If selected cell input is wrong, signal why and delete it.
         // Otherwise mark it as correct.
         for (i = 0; i < 8; i++) {
             function targetCol(i) {
