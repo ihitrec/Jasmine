@@ -127,6 +127,7 @@ $(document).ready(function () {
                 savedLP.removeClass("wrong");
                 savedLP.text("");
                 savedLP.attr("contenteditable", "true");
+                disableMobile();
                 lastPressed[0].focus();
             }, 600);
         }
@@ -152,6 +153,7 @@ $(document).ready(function () {
                     savedLP.removeClass("wrong");
                     savedLP.text("");
                     savedLP.attr("contenteditable", "true");
+                    disableMobile();
                     lastPressed[0].focus();
                 }, 600);
             } else if (i === 7) {
@@ -162,13 +164,5 @@ $(document).ready(function () {
                 }, 600);
             }
         }
-
-        setTimeout(function () {
-            disableMobile();
-        }, 620);
-
-
-
-
     };
 });
