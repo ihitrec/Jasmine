@@ -34,16 +34,6 @@ $(document).ready(function () {
         }
     }
 
-    //  Disable mobile keyboard from popping up on selected screens.
-    function disableMobile() {
-        if (window.innerWidth < 1000) {
-            $("td").attr("contenteditable", "false");
-            setTimeout(function () {
-                $("td").attr("contenteditable", "true");
-            }, 100);
-        }
-    }
-
     // Add a click function on each cell. Push the last selected cell into an array.
     $("td").click(selectedCell);
     let lastPressed = [];
@@ -53,6 +43,16 @@ $(document).ready(function () {
         lastPressed.push(this);
         $(lastPressed[0]).addClass("focused");
         disableMobile();
+    }
+
+    //  Disable mobile keyboard from popping up on selected screens.
+    function disableMobile() {
+        if (window.innerWidth < 1000 && $(lastPressed.text() === "")) {
+            $(lastPressed).attr("contenteditable", "false");
+            setTimeout(function () {
+                $(lastPressed).attr("contenteditable", "true");
+            }, 100);
+        }
     }
 
     // Enter the pressed number on numpad into the last selected cell.
