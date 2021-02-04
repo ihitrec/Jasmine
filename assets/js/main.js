@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     //  Disable mobile keyboard from popping up on selected screens.
     function disableMobile() {
-        if (window.innerWidth < 1000 && $(lastPressed.text() === "")) {
+        if (window.innerWidth < 1000 && $(lastPressed).text() === "") {
             $(lastPressed).attr("contenteditable", "false");
             setTimeout(function () {
                 $(lastPressed).attr("contenteditable", "true");
