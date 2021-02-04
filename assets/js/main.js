@@ -165,7 +165,7 @@ $(document).ready(function () {
 
         setTimeout(function () {
             disableMobile();
-        }, 700);
+        }, 620);
 
 
 
