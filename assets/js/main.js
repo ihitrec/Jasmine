@@ -162,6 +162,13 @@ $(document).ready(function () {
                 }, 600);
             }
         }
-        savedLP.attr("contenteditable", "false");
+
+        setTimeout(function () {
+            disableMobile();
+        }, 700);
+
+
+
+
     };
 });
