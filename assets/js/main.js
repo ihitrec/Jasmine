@@ -12,29 +12,26 @@ $(document).ready(function () {
     // Transfer all cells to new array to manipulate it.
     let cellArray = [];
     let cellArrayItems = document.getElementsByTagName("td");
-    for (i = 0; i < cellArrayItems.length; i++) {
+    for (i = 0; i < cellArrayItems.length; i++) {                       //Note!!!!!!
         cellArray.push(cellArrayItems[i]);
     }
 
     // Enable input on all table cells
     $("td").attr("contenteditable", "true");
 
-    // Add a key up function on each cell, if entered key is a number, keep it. Otherwise delete it.
-    // Check if entered value is correct.
-    $("td").keydown(function () {
-        // console.log($(this).text());
-        console.log(event);
-    });
-    $("td").keyup(isNum);
+    // Add a key down function on each cell. If entered key is a number, input and check it. 
+    // Otherwise do not input it.
+    $("td").keydown(isNum);
     function isNum() {
         let whichCell = this;
-        if (Number.isNaN(parseInt(event.key)) == false && event.key !== "0") {
-            let numKey = event.key;
-            whichCell.innerText = numKey;
-            lastSelectedNum = event.key;
-            enteredValueCheck();
-        } else if (Number.isNaN(parseInt(event.key)) == true || event.key === "0") {
-            whichCell.innerText = "";
+        if (/[1-9]/.test(event.key) === true) {
+            enteredValueCheck(whichCell, event.key);
+        } else {
+            $(whichCell).attr("contenteditable", "false");
+            $(whichCell).attr("contenteditable", "true");
+            setTimeout(function () {
+                $(whichCell).focus();
+            }, 10)
         }
     }
 
@@ -86,11 +83,11 @@ $(document).ready(function () {
     }
 
     // Check entered value.
-    function enteredValueCheck() {
+    function enteredValueCheck(whichCell, whichNum) {
 
         // Get cells in the same column.
         let sameColumn = [];
-        let reduceToSameColumn = cellArray.indexOf(lastPressed[0]);
+        let reduceToSameColumn = cellArray.indexOf(whichCell);
         if (reduceToSameColumn > 8) {
             let fitsHowMany = Math.floor(reduceToSameColumn / 9);
             reduceToSameColumn = reduceToSameColumn - (9 * fitsHowMany);
@@ -99,12 +96,12 @@ $(document).ready(function () {
             sameColumn.push(cellArray[j]);
         }
         reduceToSameRow = cellArray.indexOf(sameColumn[0]);// Belongs to same row part
-        let removeACell = sameColumn.indexOf(lastPressed[0]);
+        let removeACell = sameColumn.indexOf(whichCell);
         sameColumn.splice(removeACell, 1);
 
         // Get cells in the same row.
         let sameRow = [];
-        let firstRowIndex = cellArray.indexOf(lastPressed[0]) - reduceToSameRow;
+        let firstRowIndex = cellArray.indexOf(whichCell) - reduceToSameRow;
         for (nineTimes = 0; nineTimes < 9; nineTimes++) {
             if (nineTimes === reduceToSameRow) {
                 continue;
@@ -114,9 +111,10 @@ $(document).ready(function () {
         }
 
         // Variables local to function.
-        let savedLP = $(lastPressed[0]);
-        let savedLP2 = lastPressed[0];
-        let actualValue = grid1Solved[cellArray.indexOf(savedLP2)].toString();
+        let savedLP = $(whichCell);
+        let savedLP2 = whichCell;
+
+        let actualValue = grid1Solved[cellArray.indexOf(savedLP2)].toString();  //Note!!!!!!!!!!
         let savedCol = sameColumn;
         let savedRow = sameRow;
 
@@ -131,7 +129,7 @@ $(document).ready(function () {
                 savedLP.text("");
                 savedLP.attr("contenteditable", "true");
                 disableMobile();
-                lastPressed[0].focus();
+                whichCell.focus();
             }, 600);
         }
 
@@ -144,22 +142,23 @@ $(document).ready(function () {
             function targetRow(i) {
                 return $(savedRow[i]);
             }
-            if (targetCol(i).text() === savedLP.text()) {
+            if (targetCol(i).text() === whichNum) {
                 itsWrong(targetCol, i);
                 break;
-            } else if (targetRow(i).text() === savedLP.text()) {
+            } else if (targetRow(i).text() === whichNum) {
                 itsWrong(targetRow, i);
                 break;
-            } else if (savedLP.text() !== actualValue) {
+            } else if (whichNum !== actualValue) {
                 savedLP.addClass("wrong");
                 setTimeout(function () {
                     savedLP.removeClass("wrong");
                     savedLP.text("");
                     savedLP.attr("contenteditable", "true");
                     disableMobile();
-                    lastPressed[0].focus();
+                    whichCell.focus();
                 }, 600);
             } else if (i === 7) {
+                savedLP.text(whichNum);
                 savedLP.attr("contenteditable", "false");
                 savedLP.addClass("correct");
                 setTimeout(function () {
@@ -169,3 +168,5 @@ $(document).ready(function () {
         }
     };
 });
+
+// when clicked make it editable and disable coming back to it
