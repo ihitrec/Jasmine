@@ -21,6 +21,10 @@ $(document).ready(function () {
 
     // Add a key up function on each cell, if entered key is a number, keep it. Otherwise delete it.
     // Check if entered value is correct.
+    $("td").keydown(function () {
+        // console.log($(this).text());
+        console.log(event);
+    });
     $("td").keyup(isNum);
     function isNum() {
         let whichCell = this;
