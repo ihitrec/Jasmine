@@ -169,7 +169,7 @@ $(document).ready(function () {
                 if (document.activeElement === whatsFocused) {
                     whichCell.focus();
                 }
-                disableMobile(whichCell);
+                disableMobile();
 
             }, 600);
         }
@@ -200,10 +200,10 @@ $(document).ready(function () {
                     $(whichCell).removeClass("wrong");
                     $(whichCell).attr("contenteditable", "true");
                     $(whichCell).text("");
-                    disableMobile(whichCell);
                     if (document.activeElement === whatsFocused) {
                         whichCell.focus();
                     }
+                    disableMobile();
                 }, 600);
             } else if (i === 7) {
                 if (sameRowText.includes("") === false) {
