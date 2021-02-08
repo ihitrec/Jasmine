@@ -34,6 +34,10 @@ td{
 td:focus{
     background-color: #c9e0f5;
 }
+.focused{
+     background-color: #c9e0f5;
+
+}
 .wrong{
     background-color:#e01717 !important;
     opacity: .76;
