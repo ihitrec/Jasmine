@@ -88,8 +88,8 @@ $(document).ready(function () {
     //  Disable mobile keyboard from popping up on selected screens.
     function disableMobile() {
         if (window.innerWidth < 1000 && $(lastPressed).text() === "") {
-            $(lastPressed).addClass("focused");
             $(lastPressed).attr("contenteditable", "false");
+            $(lastPressed).addClass("focused");
             setTimeout(function () {
                 $(lastPressed).attr("contenteditable", "true");
             }, 100);
@@ -166,7 +166,7 @@ $(document).ready(function () {
                 $(whichCell).removeClass("wrong");
                 $(whichCell).attr("contenteditable", "true");
                 $(whichCell).text("");
-                if (document.activeElement === whatsFocused) {
+                if (document.activeElement === whatsFocused && window.innerWidth > 1000) {
                     whichCell.focus();
                 }
                 disableMobile();
@@ -200,7 +200,7 @@ $(document).ready(function () {
                     $(whichCell).removeClass("wrong");
                     $(whichCell).attr("contenteditable", "true");
                     $(whichCell).text("");
-                    if (document.activeElement === whatsFocused) {
+                    if (document.activeElement === whatsFocused && window.innerWidth > 1000) {
                         whichCell.focus();
                     }
                     disableMobile();
