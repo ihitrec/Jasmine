@@ -34,11 +34,6 @@ td{
 td:focus{
     background-color: #c9e0f5;
 }
-
-.focused{
-    background-color: #c9e0f5;
-}
-
 .wrong{
     background-color:#e01717 !important;
     opacity: .76;
@@ -64,6 +59,18 @@ td:focus{
 
 /* Numpad style -------------------------------------------------------------- END */
 
+/* Animations */
 
-
-
+.light-up {
+  animation: light-up 1s;
+}
+@keyframes light-up {
+  0% {
+    background-color: forestgreen   ;
+    opacity: .75;
+  }
+  100% {
+    background-color: aliceblue;
+    opacity: 1;
+  }
+}
