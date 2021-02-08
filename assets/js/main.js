@@ -70,7 +70,7 @@ $(document).ready(function () {
             $(whichCell).attr("contenteditable", "true");
             setTimeout(function () {
                 $(whichCell).focus();
-            }, 10)
+            }, 100)
         }
     }
 
