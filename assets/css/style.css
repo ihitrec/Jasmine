@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 body{
-    /* cursor: pointer; */
-    background-color: ghostwhite;
+    background-color: red;
     margin:0;
     display: flex;
     justify-content: center;
@@ -26,6 +25,7 @@ h1{
 /* START ------------------------------------------------------------ Table style */
 
 table{
+    cursor: pointer;
     margin: 20px auto;
     width: 450px;
     border-collapse: collapse;
@@ -71,6 +71,8 @@ td:focus{
     font-size: 60px;
     text-align: center;
     font-weight: 100;
+    cursor: pointer;
+
 }
 .num{
     margin:5px;
@@ -90,6 +92,8 @@ td:focus{
     box-shadow: 2px 3px 5px lightgrey;
     border-radius: 10px;
     font-family: 'Quicksand';
+            cursor: pointer;
+
 }
 .btn:hover{
     border:1.5px solid;
