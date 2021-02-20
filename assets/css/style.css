@@ -1,19 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 body{
-    background-color: seagreen;
+    background-color: ghostwhite;
     margin:0;
     display: flex;
     justify-content: center;
     flex-wrap:wrap;
     font-family: "Quicksand",sans-serif;
-    /* -webkit-touch-callout: none;
+    -webkit-touch-callout: none;
     -webkit-user-select: none; 
     -khtml-user-select: none; 
     -moz-user-select: none; 
     -ms-user-select: none; 
-    user-select: none; */
+    user-select: none;
     /* Vendor prefixes copied from Deni J. at Stack Overflow: https://stackoverflow.com/a/4407335/14522350 */
+    outline: none;
 }
 
 h1{
@@ -25,7 +26,6 @@ h1{
 /* START ------------------------------------------------------------ Table style */
 
 table{
-    cursor: pointer;
     margin: 20px auto;
     width: 450px;
     border-collapse: collapse;
@@ -71,8 +71,6 @@ td:focus{
     font-size: 60px;
     text-align: center;
     font-weight: 100;
-    cursor: pointer;
-
 }
 .num{
     margin:5px;
@@ -92,8 +90,6 @@ td:focus{
     box-shadow: 2px 3px 5px lightgrey;
     border-radius: 10px;
     font-family: 'Quicksand';
-            cursor: pointer;
-
 }
 .btn:hover{
     border:1.5px solid;
