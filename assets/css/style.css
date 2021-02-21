@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 body{
-    background-color: ghostwhite;
+    background-color: hotpink;
     margin:0;
     display: flex;
     justify-content: center;
@@ -14,7 +14,6 @@ body{
     -ms-user-select: none; 
     user-select: none;
     /* Vendor prefixes copied from Deni J. at Stack Overflow: https://stackoverflow.com/a/4407335/14522350 */
-    outline: none;
 }
 
 h1{
@@ -103,8 +102,11 @@ td:focus{
 
 /* START ------------------------------------------------------------ Media query */
 
-
-
+@media (pointer:fine){
+    table, .num, .btn{
+        cursor: pointer;
+    }
+}
 @media only screen and (max-width: 800px){
     table{
         width: 96%;
