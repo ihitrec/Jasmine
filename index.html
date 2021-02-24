@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku</title>
+    <script src="https://kit.fontawesome.com/69b2179d00.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
-
 </head>
 
 <body>
@@ -114,8 +114,15 @@
             </tr>
         </table>
     </div>
-    <div class="controls">
-        <div class="intro" id="numpad">
+    <div class="controls intro">
+        <h1 class="difficulty-headline">Difficulty <i class="fas fa-sort-down"></i><i class="fas fa-minus"></i></h1>
+        <div class="difficulty">
+            <span>Intermediate</span>
+            <input class="slider" type="range" min="1" max="3">
+            <span class="margin">Casual</span>
+            <span>Expert</span>
+        </div>
+        <div id="numpad">
             <span class="num">1</span>
             <span class="num">2</span>
             <span class="num">3</span>
@@ -126,7 +133,7 @@
             <span class="num">8</span>
             <span class="num">9</span>
         </div>
-        <div class="buttons intro">
+        <div class="buttons">
             <button class="btn" id="new-game">New Game</button>
             <button class="btn" id="hint">Hint</button>
         </div>

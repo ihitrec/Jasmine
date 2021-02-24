@@ -2,6 +2,7 @@
 
 body{
     background-color: ghostwhite;
+    color:#103f95;
     margin:0;
     display: flex;
     justify-content: center;
@@ -16,8 +17,11 @@ body{
     /* Vendor prefixes copied from Deni J. at Stack Overflow: https://stackoverflow.com/a/4407335/14522350 */
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 h1{
-    color:#103f95;
     font-weight: 400;
     padding-left: 7px;
 }
@@ -66,6 +70,45 @@ td:focus{
 
 /* START ------------------------------------------------------------ Controls style */
 
+.difficulty-headline{
+    font-size: 19px;
+    color: gray;
+    margin-top: 86px;
+}
+.fas{
+    margin-left:5px;
+}
+.fa-minus{
+    display: none;
+}
+.difficulty{
+    margin-left: 15px;
+    text-align: center;
+    display: none;
+}
+.slider{
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    height: 6px;
+    background-color: #0175fda8;
+    outline: none;
+    width: 85%;
+}
+.slider::-webkit-slider-thumb{
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    background-color: #0175fd;
+}
+.difficulty span{
+    font-weight: 600;
+}
+.margin{
+    margin-right: 148px;
+}
 #numpad{
     font-size: 60px;
     text-align: center;
@@ -74,7 +117,6 @@ td:focus{
 .num{
     margin:5px;
     display: inline-block;
-    color: #103f95;
     box-shadow: 1px 1px 5px lightgrey;
     border-radius: 20px;
 }
@@ -82,7 +124,6 @@ td:focus{
     box-shadow: 2px 2px 5px lightgrey;
 }
 .btn{
-    color: #103f95;
     background-color: ghostwhite;
     border: none;
     outline: none;
@@ -103,7 +144,7 @@ td:focus{
 /* START ------------------------------------------------------------ Media query */
 
 @media (pointer:fine){
-    table, .num, .btn{
+    table, .num, .btn, input, .difficulty-headline{
         cursor: pointer;
     }
 }
@@ -125,9 +166,20 @@ td:focus{
     .btn{
         font-size: 7vw;
         margin-left: 1.2em;
+            color:#103f95;
+
     }
     .btn:hover{
         border:none;
+    }
+    .difficulty{
+        margin-bottom: 15px;
+    }
+    .difficulty-headline{
+        margin-top: 0;
+    }
+    .margin{
+        margin-right: 215px;
     }
 }
 @media only screen and (max-width: 470px){
@@ -154,7 +206,7 @@ td:focus{
         width: 310px;
     }
      #numpad{
-        margin-top: 82px;
+        margin-top: 35px;
         margin-left: 15px;
         font-size: 50px;
     }
@@ -170,6 +222,8 @@ td:focus{
     .btn{
         height: 62px;
         font-size: 31px;
+            color:#103f95;
+
     }
 }
 

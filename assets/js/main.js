@@ -78,8 +78,9 @@ $(document).ready(function () {
     }
 
     //  Disable mobile keyboard from popping up on selected screens.
+    let isTouch = matchMedia("(pointer:coarse)").matches;
     function disableMobile() {
-        if (window.innerWidth < 1000 && $(lastPressed).text() === "") {
+        if (isTouch === true && $(lastPressed).text() === "") {
             $(lastPressed).attr("contenteditable", "false");
             $(lastPressed).addClass("focused");
             setTimeout(function () {
@@ -96,6 +97,17 @@ $(document).ready(function () {
             let lastSelectedNum = this.innerText;
             enteredValueCheck(lastPressed, lastSelectedNum);
         }
+    }
+
+    // Toggle difficulty
+    $(".difficulty-headline").click(show);
+    function show() {
+        $(".fa-sort-down").toggle(650);
+        $(".fa-minus").toggle(650);
+        if ($(".fa-minus").css("display") === "block") {
+            $(".fa-minus").css("display", "inline");
+        }
+        $(".difficulty").slideToggle(650);
     }
 
     // When opening the website start a new game with animations.
@@ -216,7 +228,7 @@ $(document).ready(function () {
                 $(whichCell).removeClass("wrong");
                 $(whichCell).attr("contenteditable", "true");
                 $(whichCell).text("");
-                if (document.activeElement === whatsFocused && window.innerWidth > 1000) {
+                if (document.activeElement === whatsFocused && isTouch === false) {
                     whichCell.focus();
                 }
                 disableMobile();
@@ -252,7 +264,7 @@ $(document).ready(function () {
                     $(whichCell).removeClass("wrong");
                     $(whichCell).attr("contenteditable", "true");
                     $(whichCell).text("");
-                    if (document.activeElement === whatsFocused && window.innerWidth > 1000) {
+                    if (document.activeElement === whatsFocused && isTouch === false) {
                         whichCell.focus();
                     }
                     disableMobile();
