@@ -103,6 +103,13 @@ td:focus{
     border-radius: 100%;
     background-color: #0175fd;
 }
+::-moz-range-thumb{
+      appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    background-color: #0175fd;  
+}
 .difficulty span{
     font-weight: 600;
 }
