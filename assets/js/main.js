@@ -76,11 +76,15 @@ $(document).ready(function () {
         disableMobile();
     }
 
-    if (isTouch === true) {
-        $("td").attr("contenteditable", "false");
-    }
+
     //  Disable mobile keyboard from popping up on touch screens.
     let isTouch = matchMedia("(pointer:coarse)").matches;
+    if (isTouch === true) {
+        setTimeout(function () {
+            $("td").attr("contenteditable", "false");
+
+        }, 4000)
+    }
     function disableMobile() {
         if (isTouch === true && $(lastPressed).text() === "") {
             $(lastPressed).attr("contenteditable", "false");
