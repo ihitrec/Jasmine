@@ -83,7 +83,7 @@ $(document).ready(function () {
         setTimeout(function () {
             $("td").attr("contenteditable", "false");
 
-        }, 4000)
+        }, 200)
     }
     function disableMobile() {
         if (isTouch === true && $(lastPressed).text() === "") {
@@ -299,7 +299,7 @@ $(document).ready(function () {
     $("#instructions-btn").click(showRules);
     $(".instructions-overlay").click(hideRules);
     function showRules() {
-        window.scroll(0, 0);
+        // window.scroll(0, 0);
         $("#instructions-btn").unbind("click");
         $(".instructions-overlay").unbind("click");
         $("body").children().addClass("blur");
