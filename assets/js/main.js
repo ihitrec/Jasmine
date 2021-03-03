@@ -26,34 +26,33 @@ let expert3Solved = [5, 2, 1, 7, 6, 4, 8, 9, 3, 3, 4, 8, 9, 1, 5, 2, 6, 7, 9, 7,
 
 $(document).ready(function () {
 
-    // Keep table responsive.
+    /* Keep table responsive on screens less than 801px.
+    (Bigger screens have a fixed table width) */
     $("table").height($("table").width());
     $("td").height($("table").width() / 9);
-    $("td").width($("table").width() / 9)
-    window.addEventListener("resize", resizeTable)
+    $("td").width($("table").width() / 9);
+    window.addEventListener("resize", resizeTable);
     function resizeTable() {
         $("table").height($("table").width());
         $("td").height($("table").width() / 9);
-        $("td").width($("table").width() / 9)
+        $("td").width($("table").width() / 9);
     }
 
     // Transfer all cells to new array to manipulate it.
-    let cellArray = [];
     let cellArrayItems = document.getElementsByTagName("td");
-    for (i = 0; i < cellArrayItems.length; i++) {
-        cellArray.push(cellArrayItems[i]);
-    }
+    let cellArray = Object.values(cellArrayItems);
+
 
     // Enable input on all table cells
     $("td").attr("contenteditable", "true");
 
-    // Add a key down function on each cell. If entered key is a number, input and check it.
+    // Add a key down function on each cell. If entered key is a valid number, input and check it.
     // Otherwise do not input it.
     $("td").keydown(isNum);
     function isNum() {
         let whichCell = this;
         if (/[1-9]/.test(event.key) === true) {
-            $(this).text(event.key)
+            $(this).text(event.key);
             enteredValueCheck(whichCell, event.key);
         } else {
             setTimeout(function () {
@@ -67,7 +66,7 @@ $(document).ready(function () {
         }
     }
 
-    // Add a click function on each cell. Push the last selected cell into an array.
+    // Add a click function on each cell. Push the last selected cell into a variable.
     $("td").click(selectedCell);
     let lastPressed;
     function selectedCell() {
@@ -77,7 +76,7 @@ $(document).ready(function () {
         disableMobile();
     }
 
-    //  Disable mobile keyboard from popping up on selected screens.
+    //  Disable mobile keyboard from popping up on touch screens.
     let isTouch = matchMedia("(pointer:coarse)").matches;
     function disableMobile() {
         if (isTouch === true && $(lastPressed).text() === "") {
@@ -85,7 +84,7 @@ $(document).ready(function () {
             $(lastPressed).addClass("focused");
             setTimeout(function () {
                 $(lastPressed).attr("contenteditable", "true");
-            }, 100);
+            }, 1000);
         }
     }
 
@@ -99,23 +98,165 @@ $(document).ready(function () {
         }
     }
 
-    // Toggle difficulty
+    // Game timer
+    let intervalID;
+    function interval() {
+        $("#timer").text("00:00");
+        let seconds = 0;
+        let minutes = 0;
+        intervalID = setInterval(function () {
+            if (seconds < 10) {
+                if (minutes === 0) {
+                    $("#timer").text(`00:0${seconds}`);
+                } else if (minutes < 10) {
+                    $("#timer").text(`0${minutes}:0${seconds}`);
+                } else {
+                    $("#timer").text(`${minutes}:0${seconds}`);
+                }
+            } else if (seconds >= 10 && seconds < 60) {
+                if (minutes === 0) {
+                    $("#timer").text(`00:${seconds}`);
+                } else if (minutes < 10) {
+                    $("#timer").text(`0${minutes}:${seconds}`);
+                } else {
+                    $("#timer").text(`${minutes}:${seconds}`);
+                }
+            } else if (seconds === 60) {
+                minutes++;
+                seconds = 0;
+                if (minutes < 10) {
+                    $("#timer").text(`0${minutes}:00`);
+                } else {
+                    $("#timer").text(`${minutes}:00`);
+                }
+            }
+            seconds++;
+        }, 1000);
+    }
+
+    // Check if grid is full.
+    function isFull() {
+        let isGridFull = [];
+        for (i = 0; i < cellArray.length; i++) {
+            isGridFull.push(cellArray[i].innerText);
+        }
+        if (isGridFull.includes("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // Change range value on description click. Start new game on user confirmation.
+    let rangeValue = document.getElementsByTagName("input")[0];
+    $(".difficulty span").click(function () {
+        if (this.innerText === "Casual") {
+            if (confirm("Are you sure you want to change difficulty? The current progress will be reset.") === true) {
+                rangeValue.value = "1";
+                newGame();
+            }
+        } else if (this.innerText === "Intermediate") {
+            if (confirm("Are you sure you want to change difficulty? The current progress will be reset.") === true) {
+                rangeValue.value = "2";
+                newGame();
+            }
+        } else if (this.innerText === "Expert") {
+            if (confirm("Are you sure you want to change difficulty? The current progress will be reset.") === true) {
+                rangeValue.value = "3";
+                newGame();
+            }
+        }
+    });
+
+    // Toggle difficulty slider visibility.
     $(".difficulty-headline").click(show);
     function show() {
-        $(".fa-sort-down").toggle(650);
-        $(".fa-minus").toggle(650);
+        $(".difficulty-headline").unbind("click");
+        $(".fa-sort-down").toggle(400);
+        $(".fa-minus").toggle(400);
         if ($(".fa-minus").css("display") === "block") {
             $(".fa-minus").css("display", "inline");
         }
-        $(".difficulty").slideToggle(650);
+        $(".difficulty").slideToggle(400, function () {
+            $(".difficulty-headline").click(show);
+        });
+    }
+
+    // Start new game on range value change. Revert value if cancelled.
+    let prevRangeVal = 1;
+    $("input").on("input", rangeChanged);
+    function rangeChanged() {
+        newGameStart();
+    }
+
+    // Keep track of selected difficulty and grid cycle. Pair grids with solutions.
+    let currentGrid;
+    let whichSolution;
+    let whichBeginner = 1;
+    let whichIntermediate = 0;
+    let whichExpert = 0;
+    let beginnerPair = [[beginner1, beginner1Solved], [beginner2, beginner2Solved], [beginner3, beginner3Solved]];
+    let intermediatePair = [[intermediate1, intermediate1Solved], [intermediate2, intermediate2Solved], [intermediate3, intermediate3Solved]];
+    let expertPair = [[expert1, expert1Solved], [expert2, expert2Solved], [expert3, expert3Solved]];
+
+    // On user confirmation: Restart timer, start new game based on selected difficulty and increment grid cycle.
+    $("#new-game").click(newGameStart);
+    function newGameStart() {
+        if (confirm("Are you sure you want to start a new game? The current progress will be reset.") === true) {
+            newGame();
+        } else {
+            rangeValue.value = prevRangeVal;
+        }
+    }
+    function newGame() {
+        prevRangeVal = rangeValue.value;
+        clearInterval(intervalID);
+        interval();
+        currentGrid = document.getElementsByTagName("input")[0].value;
+        $("td").text("");
+        $("td").attr("contenteditable", "true");
+        gridTemplate(currentGrid);
+    }
+    function gridTemplate(cGridParam) {
+        if (cGridParam === "1") {
+            if (whichBeginner === 3) {
+                whichBeginner = 0;
+            }
+            currentGrid = beginnerPair[whichBeginner][0];
+            whichSolution = beginnerPair[whichBeginner][1];
+            whichBeginner++;
+        } else if (cGridParam === "2") {
+            if (whichIntermediate === 3) {
+                whichIntermediate = 0;
+            }
+            currentGrid = intermediatePair[whichIntermediate][0];
+            whichSolution = intermediatePair[whichIntermediate][1];
+            whichIntermediate++;
+        } else if (cGridParam === "3") {
+            if (whichExpert === 3) {
+                whichExpert = 0;
+            }
+            currentGrid = expertPair[whichExpert][0];
+            whichSolution = expertPair[whichExpert][1];
+            whichExpert++;
+        }
+        for (i = 0; i < 81; i++) {
+            if (typeof currentGrid[i] === "number") {
+                cellArray[i].innerText = currentGrid[i];
+                $(cellArray[i]).attr("contenteditable", "false");
+            }
+        }
     }
 
     // When opening the website start a new game with animations.
     function firstNewGame() {
+        currentGrid = beginner1;
+        whichSolution = beginner1Solved;
+        rangeValue.value = "1";
         let nextLetter = 0;
         setTimeout(function () {
             for (i = 0; i < cellArray.length; i++) {
-                if (typeof intermediate2[i] === "number") {
+                if (typeof beginner1[i] === "number") {
                     nextLetter += 1;
                     showLetters(i, nextLetter);
                 }
@@ -124,46 +265,49 @@ $(document).ready(function () {
         setTimeout(function () {
             $("td").removeClass("intro-letter");
         }, 2500);
+        interval();
     }
     function showLetters(i, nextLetter) {
         setTimeout(function () {
             $(cellArray[i]).addClass("intro-letter");
-            cellArray[i].innerText = intermediate2[i];
+            cellArray[i].innerText = beginner1[i];
             $(cellArray[i]).attr("contenteditable", "false");
         }, 50 * nextLetter);
     }
 
-    // Start a new game which fills the grid with the pre-made template.
-    $("#new-game").click(newGame);
-    function newGame() {
-        $("td").text("");
-        $("td").attr("contenteditable", "true");
-        gridTemplate();
-    }
-    function gridTemplate() {
-        for (i = 0; i < intermediate2.length; i++) {
-            if (typeof intermediate2[i] === "number") {
-                cellArray[i].innerText = intermediate2[i];
-                $(cellArray[i]).attr("contenteditable", "false");
-            }
-        }
-    }
-
-    // Fill out a random cell
+    // Fill out a random cell.
     $("#hint").click(hint);
     function hint() {
-        let isGridFilled = [];
-        for (i = 0; i < cellArray.length; i++) {
-            isGridFilled.push(cellArray[i].innerText);
-        }
         let pickACell = Math.floor(Math.random() * 81);
         let pickedCell = cellArray[pickACell];
         if ($(pickedCell).text() === "") {
-            $(pickedCell).text(intermediate2Solved[pickACell]);
-            enteredValueCheck(pickedCell, intermediate2Solved[pickACell].toString());
-        } else if (isGridFilled.includes("") === true) {
+            $(pickedCell).text(whichSolution[pickACell]);
+            enteredValueCheck(pickedCell, whichSolution[pickACell].toString());
+        } else if (isFull() === false) {
             hint();
         }
+    }
+
+    //Open instructions window
+    $("#instructions-btn").click(showRules);
+    $(".instructions-overlay").click(hideRules);
+    function showRules() {
+        $("#instructions-btn").unbind("click");
+        $(".instructions-overlay").unbind("click");
+        $("body").children().addClass("blur");
+        $(".instructions-overlay").slideToggle(450, function () {
+            $("#instructions-btn").click(showRules);
+            $(".instructions-overlay").click(hideRules);
+        });
+    }
+    function hideRules() {
+        $(".instructions-overlay").unbind("click");
+        $("#instructions-btn").unbind("click");
+        $("body").children().removeClass("blur");
+        $(".instructions-overlay").slideToggle(450, function () {
+            $(".instructions-overlay").click(hideRules);
+            $("#instructions-btn").click(showRules);
+        });
     }
 
     // Check entered value.
@@ -247,7 +391,7 @@ $(document).ready(function () {
 
         // If selected cell input is wrong, signal why and delete it.
         // Otherwise mark it as correct.
-        let actualValue = intermediate2Solved[cellArray.indexOf(whichCell)].toString();
+        let actualValue = whichSolution[cellArray.indexOf(whichCell)].toString();
         for (i = 0; i < 8; i++) {
             if ($(sameBox[i]).text() === whichNum) {
                 itsWrong(sameBox, i);
@@ -291,6 +435,9 @@ $(document).ready(function () {
                 }, 400);
             }
         }
-    };
+        if (isFull() === true) {
+            clearInterval(intervalID);
+        }
+    }
     firstNewGame();
 });

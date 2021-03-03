@@ -2,11 +2,9 @@
 
 body{
     background-color: ghostwhite;
-    color:#103f95;
+    color:red;
     margin:0;
-    display: flex;
     justify-content: center;
-    flex-wrap:wrap;
     font-family: "Quicksand",sans-serif;
     -webkit-touch-callout: none;
     -webkit-user-select: none; 
@@ -16,7 +14,10 @@ body{
     user-select: none;
     /* Vendor prefixes copied from Deni J. at Stack Overflow: https://stackoverflow.com/a/4407335/14522350 */
 }
-
+.scale{
+    display: flex;
+    justify-content: center;
+}
 .pointer{
     cursor: pointer;
 }
@@ -26,6 +27,9 @@ h1{
     padding-left: 7px;
 }
 
+.blur{
+    filter: blur(3px);
+}
 /* START ------------------------------------------------------------ Table style */
 
 table{
@@ -74,12 +78,18 @@ td:focus{
     font-size: 19px;
     color: gray;
     margin-top: 86px;
+    display: inline-block;
 }
 .fas{
     margin-left:5px;
 }
 .fa-minus{
     display: none;
+}
+#timer{
+    display: inline-block;
+    margin-left: 133px;
+
 }
 .difficulty{
     margin-left: 15px;
@@ -136,7 +146,21 @@ td:focus{
     outline: none;
     box-shadow: 2px 3px 5px lightgrey;
     border-radius: 10px;
-    font-family: 'Quicksand';
+    font-family: 'Quicksand',sans-serif;
+}
+#instructions-btn{
+    margin-top: 9px;
+    background-color: #2e54a7;
+    color: ghostwhite;
+    font-size: 23px;
+    width: 94%;
+    height: 30px;
+    opacity: .94;
+}
+#instructions-btn:hover{
+    opacity: 1;
+    border: none;
+    box-shadow: 2px 3px 5px lightgrey;
 }
 .btn:hover{
     border:1.5px solid;
@@ -145,17 +169,53 @@ td:focus{
 #hint{
     width: 3em;
 }
+.instructions-overlay{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #000000ab;
+    z-index: 1;
+    filter: blur(0);
+    display: none;
+    top: 0 !important;
+}
+.instructions{
+    width: 46%;
+    height: auto;
+    background-color: ghostwhite;
+    margin: auto;
+    margin-top: 150px;
+    border-radius: 20px;
+    padding: 15px;
+    text-align: justify;
+}
+.instructions h1{
+    margin:0;
+}
+.fa-times-circle{
+    float: right;
+    font-size: .75em;
+    margin-top: 8px;
+}
+.instructions p{
+    font-size: 1.2em;
+    padding: 0 17px;
+    color: black;
+}
 
 /* Numpad style -------------------------------------------------------------- END */
 
 /* START ------------------------------------------------------------ Media query */
 
 @media (pointer:fine){
-    table, .num, .btn, input, .difficulty-headline{
+    table, .num, .btn, input, .difficulty-headline, .difficulty span {
         cursor: pointer;
     }
 }
 @media only screen and (max-width: 800px){
+    .scale{
+        display: block;
+    }
     table{
         width: 96%;
     }
@@ -164,17 +224,31 @@ td:focus{
     }
     #numpad{
         font-size: 8vw;
+        margin-bottom: 6px;
     }
     .num{
-        width: 1em;
+        width: 7.9vw;
         margin: 0;
-        margin-bottom: 20px;
+    }
+    .first-row{
+        width: 94%;
+    }
+    .buttons{
+        text-align: center;
+    }
+    #hint{
+        width: 42vw;
     }
     .btn{
         font-size: 7vw;
-        margin-left: 1.2em;
-            color:#103f95;
-
+        margin: 6px;
+        color:#103f95;
+        width: 42vw;
+    }
+    #instructions-btn{
+        font-size: 5vw;
+        width: 87vw;
+        height: auto;
     }
     .btn:hover{
         border:none;
@@ -184,14 +258,42 @@ td:focus{
     }
     .difficulty-headline{
         margin-top: 0;
+        font-size: 20px;
+        margin-left: 6vw;
+        font-size: 3.5vw;
+    }
+    #timer{
+        font-size: 3.4vw;
+        float: right;
+        margin-right: 1vw;
+        margin-left: 0;
     }
     .margin{
-        margin-right: 215px;
+        margin-right: 64%;
+    }
+    .instructions{
+        width: 85%;
     }
 }
 @media only screen and (max-width: 470px){
     td{
         font-size: 22px;
+    }
+    .instructions h1{
+        font-size: 1.5em;
+    }
+    .fa-times-circle {
+        margin-top: 6px;
+    }
+    .instructions p {
+        font-size: 1em;
+        padding:2px;
+    }
+    .difficulty{
+        font-size: 0.8em;
+    }
+    #timer, .difficulty-headline{
+        font-size: 15px;
     }
 }
 
@@ -202,7 +304,6 @@ td:focus{
     .btn{
         font-size: 6vw;
     }
-
 }
 
 @media only screen and (min-width: 801px){
@@ -213,7 +314,7 @@ td:focus{
         width: 310px;
     }
      #numpad{
-        margin-top: 35px;
+        margin-top: 29px;
         margin-left: 15px;
         font-size: 50px;
     }
@@ -224,21 +325,26 @@ td:focus{
         margin-top: 19px;
         margin-left: 15px;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
     }
     .btn{
         height: 62px;
         font-size: 31px;
-            color:#103f95;
-
+        color:#103f95;
     }
 }
 
 @media only screen and (min-width: 1630px){
-    body{
+    .scale{
         transform: scale(1.5);
-        width: 50%;
         margin: 144px auto;
+        justify-content: center;
+        width: 49%;
+    }
+    .instructions{
+        transform: scale(1.5);
+        margin-top: 250px;
     }
 }
 /* Media query -------------------------------------------------------------- END */
