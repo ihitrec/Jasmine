@@ -83,7 +83,7 @@ $(document).ready(function () {
         setTimeout(function () {
             $("td").attr("contenteditable", "false");
 
-        }, 200)
+        }, 110)
     }
     function disableMobile() {
         if (isTouch === true && $(lastPressed).text() === "") {
