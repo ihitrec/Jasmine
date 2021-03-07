@@ -42,7 +42,6 @@ $(document).ready(function () {
     let cellArrayItems = document.getElementsByTagName("td");
     let cellArray = Object.values(cellArrayItems);
 
-
     // Enable input on all table cells
     $("td").attr("contenteditable", "true");
 
@@ -76,29 +75,19 @@ $(document).ready(function () {
         disableMobile();
     }
 
-
     //  Disable mobile keyboard from popping up on touch screens.
     let isTouch = matchMedia("(pointer:coarse)").matches;
-    if (isTouch === true) {
-        setTimeout(function () {
-            $("td").attr("contenteditable", "false");
-
-        }, 110)
-    }
     function disableMobile() {
         if (isTouch === true && $(lastPressed).text() === "") {
             $(lastPressed).attr("contenteditable", "false");
             $(lastPressed).addClass("focused");
-            setTimeout(function () {
-                $(lastPressed).attr("contenteditable", "true");
-            }, 1000);
         }
     }
 
     // Enter the pressed number on numpad into the last selected cell.
     $(".num").click(numPad);
     function numPad() {
-        if ($(lastPressed).attr("contenteditable") === "true") {
+        if ($(lastPressed).text() === "") {
             lastPressed.innerText = this.innerText;
             let lastSelectedNum = this.innerText;
             enteredValueCheck(lastPressed, lastSelectedNum);
@@ -299,7 +288,6 @@ $(document).ready(function () {
     $("#instructions-btn").click(showRules);
     $(".instructions-overlay").click(hideRules);
     function showRules() {
-        // window.scroll(0, 0);
         $("#instructions-btn").unbind("click");
         $(".instructions-overlay").unbind("click");
         $("body").children().addClass("blur");
@@ -383,7 +371,6 @@ $(document).ready(function () {
                 if (document.activeElement === whatsFocused && isTouch === false) {
                     whichCell.focus();
                 }
-                disableMobile();
             }, 600);
         }
 
@@ -419,7 +406,6 @@ $(document).ready(function () {
                     if (document.activeElement === whatsFocused && isTouch === false) {
                         whichCell.focus();
                     }
-                    disableMobile();
                 }, 600);
             } else if (i === 7) {
                 if (sameRowText.includes("") === false) {
